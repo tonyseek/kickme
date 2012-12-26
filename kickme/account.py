@@ -50,8 +50,8 @@ class DoubanSession(object):
 
     def group(self, group_id):
         """Get a group management service."""
-        return groups.DoubanGroup(client=self.client, session=self,
-                                  group_id=group_id)
+        return group.DoubanGroup(client=self.client, session=self,
+                                 group_id=group_id)
 
 
 class DoubanLoginException(Exception):
