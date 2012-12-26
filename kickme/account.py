@@ -29,6 +29,11 @@ class DoubanSession(object):
         r = self.client.post(consts.LOGIN_URL, data=data)
         etree = lxml.html.fromstring(r.text)
 
+        #: errors occured
+        errors = etree.xpath("//div[@id='item-error']/p/text()")
+        if errors:
+            raise DoubanLoginError(",".join(errors))
+
         #: require to provide captcha
         captcha_url = "".join(etree.xpath("//img[@id='captcha_image']/@src"))
         captcha_id = "".join(etree.xpath("//input[@name='captcha-id']/@value"))
@@ -37,11 +42,6 @@ class DoubanSession(object):
             captcha = Captcha(captcha_id, captcha_bytes)
             raise DoubanLoginRequireCaptcha(captcha=captcha, username=username,
                                             password=password)
-
-        #: errors occured
-        errors = etree.xpath("//div[@id='item-error']/p/text()")
-        if errors:
-            raise DoubanLoginError(",".join(errors))
 
     @property
     def ck(self):
