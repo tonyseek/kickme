@@ -4,6 +4,7 @@ import requests
 import lxml.html
 
 from . import consts 
+from . import groups
 
 
 Captcha = collections.namedtuple("Captcha", ["captcha_id", "captcha_bytes"])
@@ -41,6 +42,15 @@ class DoubanSession(object):
         errors = etree.xpath("//div[@id='item-error']/p/text()")
         if errors:
             raise DoubanLoginError(",".join(errors))
+
+    @property
+    def ck(self):
+        return self.client.cookies.get("ck").strip('"')
+
+    def group(self, group_id):
+        """Get a group management service."""
+        return groups.DoubanGroup(client=self.client, session=self,
+                                  group_id=group_id)
 
 
 class DoubanLoginException(Exception):
