@@ -41,7 +41,7 @@ class DoubanGroupMember(object):
     #: assign getters of attributes
     _make_getter = lambda _attr: property(lambda self: self.data[_attr])
     for _attr in ("avatar", "alt", "id", "name", "uid"):
-        locals()[_attr] = make_getter(_attr)
+        locals()[_attr] = _make_getter(_attr)
     del _attr
     del _make_getter
 
