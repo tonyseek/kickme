@@ -4,7 +4,7 @@ import requests
 import lxml.html
 
 from . import consts 
-from . import groups
+from . import group
 
 
 Captcha = collections.namedtuple("Captcha", ["captcha_id", "captcha_bytes"])
@@ -45,6 +45,7 @@ class DoubanSession(object):
 
     @property
     def ck(self):
+        """The CSRF token."""
         return self.client.cookies.get("ck").strip('"')
 
     def group(self, group_id):
