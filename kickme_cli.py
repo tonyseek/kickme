@@ -1,3 +1,4 @@
+import sys
 import getpass
 import logging.config
 
@@ -22,7 +23,8 @@ def main():
                 captcha_id = e.captcha.captcha_id
                 captcha_solution = raw_input("Captcha Solution: ")
             except DoubanLoginError as e:
-                print("Failed to login: %s" % e.args.pop())
+                print >> sys.stderr, "Failed to login: %s" % ",".join(e.args)
+                sys.exit(-1)
             else:
                 break
 
@@ -30,7 +32,7 @@ def main():
         worker = Worker(session.group(group_id))
         worker.join()
     except KeyboardInterrupt:
-        print("\nQuit.\n")
+        print >> sys.stderr, "\nQuit.\n"
 
 
 if __name__ == "__main__":
