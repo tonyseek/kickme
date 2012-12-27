@@ -42,7 +42,7 @@ class Worker(object):
                 member = self.members_queue.get()
                 member.kick()
                 self.logger.info(u"%s has been kicked." % member.uid)
-                gevent.sleep(1)
+                gevent.sleep(3)
 
     def join(self):
         self.logger.info(u"The worker start working.")
