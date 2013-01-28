@@ -59,7 +59,7 @@ class DoubanLoginException(Exception):
 
 
 class DoubanLoginRequireCaptcha(DoubanLoginException):
-    """Failed to login douban because of captcha is required."""
+    """Failed to login douban because the captcha is required."""
 
     def __init__(self, message=None, captcha=None, username=None,
                  password=None):
